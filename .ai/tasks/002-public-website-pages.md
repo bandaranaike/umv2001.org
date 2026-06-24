@@ -1,6 +1,6 @@
 # Task: Public Website Pages
 
-Status: Pending
+Status: Completed
 
 ## Raw Input
 

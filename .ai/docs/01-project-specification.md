@@ -2,7 +2,7 @@
 
 ## Project
 
-Build a minimal, clean, modern website for **UMV 2001 O/L Alumni Association**, a welfare society of old boys and girls of Udadumbara Maha Vidyalaya, now Udadumbara Secondary School.
+Build a minimal, clean, modern website for **UMV 2001 O/L Alumni Association**, a welfare society of Alumni of Udadumbara Maha Vidyalaya, now Udadumbara Secondary School.
 
 Domain: **umv2001.org**
 Project path: `/var/www/umv2001`
