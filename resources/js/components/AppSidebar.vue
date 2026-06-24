@@ -1,6 +1,17 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { BookOpen, FolderGit2, LayoutGrid } from '@lucide/vue';
+import {
+    CalendarDays,
+    CreditCard,
+    BookOpen,
+    FolderGit2,
+    LayoutGrid,
+    Mail,
+    Palette,
+    Shield,
+    User,
+    Users,
+} from '@lucide/vue';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
@@ -16,20 +27,94 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
+import { edit as appearanceEdit } from '@/routes/appearance';
+import { dashboard as adminDashboard } from '@/routes/admin';
+import { index as adminContactMessagesIndex } from '@/routes/admin/contact-messages';
+import { index as adminEventsIndex } from '@/routes/admin/events';
+import { index as adminMembersIndex } from '@/routes/admin/members';
+import { index as adminPaymentsIndex } from '@/routes/admin/payments';
+import { dashboard as memberDashboard } from '@/routes/member';
+import { edit as memberProfileEdit } from '@/routes/member/profile';
+import { index as memberPaymentsIndex } from '@/routes/member/payments';
+import { edit as profileEdit } from '@/routes/profile';
+import { edit as securityEdit } from '@/routes/security';
 import type { NavItem } from '@/types';
 
 const page = usePage();
+const user = computed(() => page.props.auth.user);
 
 const dashboardUrl = computed(() =>
-    page.props.currentTeam ? dashboard(page.props.currentTeam.slug).url : '/',
+    user.value?.role === 'admin'
+        ? adminDashboard().url
+        : memberDashboard().url,
 );
 
-const mainNavItems = computed<NavItem[]>(() => [
+const memberNavItems = computed<NavItem[]>(() => [
     {
         title: 'Dashboard',
-        href: dashboardUrl.value,
+        href: memberDashboard().url,
         icon: LayoutGrid,
+    },
+    {
+        title: 'My Profile',
+        href: memberProfileEdit().url,
+        icon: User,
+    },
+    {
+        title: 'My Payments',
+        href: memberPaymentsIndex().url,
+        icon: CreditCard,
+    },
+    {
+        title: 'Events',
+        href: '/events',
+        icon: CalendarDays,
+    },
+]);
+
+const adminNavItems = computed<NavItem[]>(() => [
+    {
+        title: 'Dashboard',
+        href: adminDashboard().url,
+        icon: LayoutGrid,
+    },
+    {
+        title: 'Members',
+        href: adminMembersIndex().url,
+        icon: Users,
+    },
+    {
+        title: 'Payments',
+        href: adminPaymentsIndex().url,
+        icon: CreditCard,
+    },
+    {
+        title: 'Events',
+        href: adminEventsIndex().url,
+        icon: CalendarDays,
+    },
+    {
+        title: 'Contact Messages',
+        href: adminContactMessagesIndex().url,
+        icon: Mail,
+    },
+]);
+
+const settingsNavItems = computed<NavItem[]>(() => [
+    {
+        title: 'Profile Settings',
+        href: profileEdit().url,
+        icon: User,
+    },
+    {
+        title: 'Security',
+        href: securityEdit().url,
+        icon: Shield,
+    },
+    {
+        title: 'Appearance',
+        href: appearanceEdit().url,
+        icon: Palette,
     },
 ]);
 
@@ -67,7 +152,17 @@ const footerNavItems: NavItem[] = [
         </SidebarHeader>
 
         <SidebarContent>
-            <NavMain :items="mainNavItems" />
+            <NavMain
+                v-if="user?.role === 'member' || user?.role === 'admin'"
+                :items="memberNavItems"
+                label="Member Area"
+            />
+            <NavMain
+                v-if="user?.role === 'admin'"
+                :items="adminNavItems"
+                label="Admin Area"
+            />
+            <NavMain :items="settingsNavItems" label="Settings" />
         </SidebarContent>
 
         <SidebarFooter>

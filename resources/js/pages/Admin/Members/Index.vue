@@ -3,7 +3,14 @@ import { Head, Link } from '@inertiajs/vue3';
 
 defineProps<{
     members: {
-        data: Array<{ id: number; name: string; email: string; membership_number: string | null; phone: string | null; is_active: boolean }>;
+        data: Array<{
+            id: number;
+            name: string;
+            email: string;
+            membership_number: string | null;
+            phone: string | null;
+            is_active: boolean;
+        }>;
     };
 }>();
 </script>
@@ -12,26 +19,69 @@ defineProps<{
     <Head title="Members" />
     <div>
         <div class="flex items-center justify-between gap-4">
-            <h1 class="text-3xl font-bold tracking-tight text-slate-900">Members</h1>
-            <Link href="/admin/members/create" class="rounded-xl bg-emerald-700 px-4 py-2.5 text-sm font-semibold text-white">Create Member</Link>
+            <h1
+                class="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50"
+            >
+                Members
+            </h1>
+            <Link
+                href="/admin/members/create"
+                class="rounded-xl bg-emerald-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-emerald-800"
+                >Create Member</Link
+            >
         </div>
-        <div class="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-            <table class="min-w-full divide-y divide-slate-200">
-                <tbody class="divide-y divide-slate-200">
-                    <tr v-for="member in members.data" :key="member.id">
+        <div
+            class="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900"
+        >
+            <table
+                class="min-w-full divide-y divide-slate-200 dark:divide-slate-800"
+            >
+                <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                    <tr
+                        v-for="member in members.data"
+                        :key="member.id"
+                        class="transition-colors hover:bg-slate-50/50 dark:hover:bg-slate-800/30"
+                    >
                         <td class="px-4 py-4">
-                            <p class="font-medium text-slate-900">{{ member.name }}</p>
-                            <p class="text-sm text-slate-500">{{ member.email }}</p>
+                            <p
+                                class="font-medium text-slate-900 dark:text-slate-100"
+                            >
+                                {{ member.name }}
+                            </p>
+                            <p
+                                class="text-sm text-slate-500 dark:text-slate-400"
+                            >
+                                {{ member.email }}
+                            </p>
                         </td>
-                        <td class="px-4 py-4 text-sm text-slate-700">{{ member.membership_number || '-' }}</td>
-                        <td class="px-4 py-4 text-sm text-slate-700">{{ member.phone || '-' }}</td>
+                        <td
+                            class="px-4 py-4 text-sm text-slate-700 dark:text-slate-300"
+                        >
+                            {{ member.membership_number || '-' }}
+                        </td>
+                        <td
+                            class="px-4 py-4 text-sm text-slate-700 dark:text-slate-300"
+                        >
+                            {{ member.phone || '-' }}
+                        </td>
                         <td class="px-4 py-4 text-sm">
-                            <span :class="member.is_active ? 'bg-emerald-50 text-emerald-700 ring-emerald-200' : 'bg-amber-50 text-amber-700 ring-amber-200'" class="inline-flex rounded-full px-2.5 py-1 text-xs font-medium ring-1 ring-inset">
+                            <span
+                                :class="
+                                    member.is_active
+                                        ? 'bg-emerald-50 text-emerald-700 ring-emerald-200 dark:bg-emerald-950/30 dark:text-emerald-400 dark:ring-emerald-800/30'
+                                        : 'bg-amber-50 text-amber-700 ring-amber-200 dark:bg-amber-950/30 dark:text-amber-400 dark:ring-amber-800/30'
+                                "
+                                class="inline-flex rounded-full px-2.5 py-1 text-xs font-medium ring-1 ring-inset"
+                            >
                                 {{ member.is_active ? 'Active' : 'Inactive' }}
                             </span>
                         </td>
                         <td class="px-4 py-4 text-right text-sm">
-                            <Link :href="`/admin/members/${member.id}`" class="font-semibold text-emerald-700">View</Link>
+                            <Link
+                                :href="`/admin/members/${member.id}`"
+                                class="font-semibold text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
+                                >View</Link
+                            >
                         </td>
                     </tr>
                 </tbody>

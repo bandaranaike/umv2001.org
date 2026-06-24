@@ -4,10 +4,10 @@ import { Head } from '@inertiajs/vue3';
 
 <template>
     <Head title="About" />
-    <section class="bg-white py-16 sm:py-20">
+    <section class="bg-white dark:bg-slate-950 py-16 sm:py-20 transition-colors duration-300">
         <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">About UMV 2001 O/L Alumni Association</h1>
-            <div class="mt-8 space-y-6 text-base leading-7 text-slate-600">
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50 md:text-4xl">About UMV 2001 O/L Alumni Association</h1>
+            <div class="mt-8 space-y-6 text-base leading-7 text-slate-600 dark:text-slate-400">
                 <p>
                     We are former students of Udadumbara Maha Vidyalaya, currently known as Udadumbara Secondary School, who sat for the G.C.E. Ordinary Level Examination in 2001.
                 </p>
