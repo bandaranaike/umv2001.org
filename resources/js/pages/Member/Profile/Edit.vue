@@ -1,7 +1,18 @@
 <script setup lang="ts">
+import { Plus } from '@lucide/vue';
+import { ref } from 'vue';
 import { Form, Head } from '@inertiajs/vue3';
 
-defineProps<{
+type FamilyMemberForm = {
+    id?: number;
+    relationship: string;
+    name: string;
+    phone: string | null;
+    date_of_birth: string | null;
+    notes: string | null;
+};
+
+const props = defineProps<{
     profile: {
         name: string;
         email: string;
@@ -25,6 +36,33 @@ defineProps<{
         }>;
     };
 }>();
+
+const familyMembers = ref<FamilyMemberForm[]>(
+    props.profile.family_members.length
+        ? props.profile.family_members.map((familyMember) => ({
+              id: familyMember.id,
+              relationship: familyMember.relationship,
+              name: familyMember.name,
+              phone: familyMember.phone ?? '',
+              date_of_birth: familyMember.date_of_birth ?? '',
+              notes: familyMember.notes ?? '',
+          }))
+        : [createFamilyMember()],
+);
+
+function createFamilyMember(): FamilyMemberForm {
+    return {
+        relationship: 'other',
+        name: '',
+        phone: '',
+        date_of_birth: '',
+        notes: '',
+    };
+}
+
+function addFamilyMember(): void {
+    familyMembers.value.push(createFamilyMember());
+}
 </script>
 
 <template>
@@ -189,15 +227,25 @@ defineProps<{
             <section
                 class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm ring-1 ring-slate-200/60 dark:ring-slate-800/80 dark:border-slate-800 dark:bg-slate-900"
             >
-                <h2
-                    class="text-lg font-semibold text-slate-900 dark:text-slate-50"
-                >
-                    Family details
-                </h2>
+                <div class="flex items-center justify-between gap-4">
+                    <h2
+                        class="text-lg font-semibold text-slate-900 dark:text-slate-50"
+                    >
+                        Family details
+                    </h2>
+                    <button
+                        type="button"
+                        class="inline-flex size-9 items-center justify-center rounded-full border border-slate-300 text-slate-600 transition-colors hover:border-brand-300 hover:text-brand-700 dark:border-slate-700 dark:text-slate-300 dark:hover:border-brand-800 dark:hover:text-brand-400"
+                        @click="addFamilyMember"
+                        aria-label="Add family member"
+                    >
+                        <Plus class="size-4" />
+                    </button>
+                </div>
                 <div class="mt-5 space-y-4">
                     <div
-                        v-for="(familyMember, index) in profile.family_members"
-                        :key="familyMember.id"
+                        v-for="(familyMember, index) in familyMembers"
+                        :key="familyMember.id ?? index"
                         class="grid gap-3 rounded-xl border border-slate-200 p-4 md:grid-cols-2 dark:border-slate-800"
                     >
                         <input
@@ -254,50 +302,13 @@ defineProps<{
                             :value="familyMember.date_of_birth"
                             class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-600 focus:ring-2 focus:ring-brand-600/20 focus:outline-hidden dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100"
                         />
-                    </div>
-                    <div
-                        class="grid gap-3 rounded-xl border border-dashed border-slate-300 p-4 md:grid-cols-2 dark:border-slate-700"
-                    >
-                        <input
-                            name="family_members[99][name]"
-                            placeholder="Add family member name"
-                            class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:border-brand-600 focus:ring-2 focus:ring-brand-600/20 focus:outline-hidden dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:placeholder:text-slate-600"
+                        <textarea
+                            :name="`family_members[${index}][notes]`"
+                            rows="3"
+                            :value="familyMember.notes"
+                            placeholder="Notes"
+                            class="md:col-span-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:border-brand-600 focus:ring-2 focus:ring-brand-600/20 focus:outline-hidden dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:placeholder:text-slate-600"
                         />
-                        <select
-                            name="family_members[99][relationship]"
-                            class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-600 focus:ring-2 focus:ring-brand-600/20 focus:outline-hidden dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100"
-                        >
-                            <option
-                                value="other"
-                                class="dark:bg-slate-950 dark:text-slate-100"
-                            >
-                                Other
-                            </option>
-                            <option
-                                value="mother"
-                                class="dark:bg-slate-950 dark:text-slate-100"
-                            >
-                                Mother
-                            </option>
-                            <option
-                                value="father"
-                                class="dark:bg-slate-950 dark:text-slate-100"
-                            >
-                                Father
-                            </option>
-                            <option
-                                value="spouse"
-                                class="dark:bg-slate-950 dark:text-slate-100"
-                            >
-                                Spouse
-                            </option>
-                            <option
-                                value="child"
-                                class="dark:bg-slate-950 dark:text-slate-100"
-                            >
-                                Child
-                            </option>
-                        </select>
                     </div>
                 </div>
             </section>

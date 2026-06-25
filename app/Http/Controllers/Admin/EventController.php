@@ -10,6 +10,7 @@ use App\Models\EventPhoto;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -32,8 +33,13 @@ class EventController extends Controller
 
     public function store(StoreEventRequest $request): RedirectResponse
     {
+        $eventData = $request->safe()->except('photos');
+        $eventData['slug'] = $this->uniqueSlug(
+            $request->string('slug')->toString() ?: $request->string('title')->toString(),
+        );
+
         $event = Event::query()->create([
-            ...$request->safe()->except('photos'),
+            ...$eventData,
             'is_published' => $request->boolean('is_published'),
             'published_at' => $request->boolean('is_published') ? now() : null,
             'created_by' => $request->user()->id,
@@ -117,6 +123,20 @@ class EventController extends Controller
                 'sort_order' => $event->photos()->max('sort_order') + 1,
             ]);
         }
+    }
+
+    private function uniqueSlug(string $value): string
+    {
+        $baseSlug = Str::slug($value) ?: 'event';
+        $slug = $baseSlug;
+        $suffix = 2;
+
+        while (Event::query()->where('slug', $slug)->exists()) {
+            $slug = "{$baseSlug}-{$suffix}";
+            $suffix++;
+        }
+
+        return $slug;
     }
 
     /**

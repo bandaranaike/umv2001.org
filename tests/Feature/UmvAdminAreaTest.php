@@ -22,6 +22,12 @@ test('admin can manage members', function () {
         ])
         ->assertRedirect();
 
+    $member = User::query()->where('email', 'new-member@example.com')->firstOrFail();
+
+    $this->actingAs($admin)
+        ->get(route('admin.members.show', $member))
+        ->assertOk();
+
     $this->assertDatabaseHas(User::class, [
         'email' => 'new-member@example.com',
         'membership_number' => 'UMV-001',
@@ -72,4 +78,38 @@ test('admin can manage payments events and contact messages', function () {
         ->assertRedirect();
 
     expect($message->refresh()->is_read)->toBeTrue();
+});
+
+test('admin can create events without manually entering a slug', function () {
+    $admin = User::factory()->admin()->create();
+
+    $this->actingAs($admin)
+        ->post(route('admin.events.store'), [
+            'title' => 'Annual Welfare Meeting',
+            'short_description' => 'Planning member welfare programs.',
+            'description' => 'Meeting details.',
+            'location' => 'Udadumbara',
+            'start_date' => '2026-09-20',
+        ])
+        ->assertRedirect();
+
+    $this->assertDatabaseHas(Event::class, [
+        'title' => 'Annual Welfare Meeting',
+        'slug' => 'annual-welfare-meeting',
+    ]);
+
+    $this->actingAs($admin)
+        ->post(route('admin.events.store'), [
+            'title' => 'Annual Welfare Meeting',
+            'short_description' => 'Follow-up welfare planning.',
+            'description' => 'Follow-up details.',
+            'location' => 'Udadumbara',
+            'start_date' => '2026-09-21',
+        ])
+        ->assertRedirect();
+
+    $this->assertDatabaseHas(Event::class, [
+        'title' => 'Annual Welfare Meeting',
+        'slug' => 'annual-welfare-meeting-2',
+    ]);
 });
