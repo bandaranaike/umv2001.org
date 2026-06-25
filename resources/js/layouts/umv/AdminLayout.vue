@@ -19,27 +19,27 @@ import { logout } from '@/routes';
                 <nav class="mt-8 flex flex-col gap-2 text-sm">
                     <Link
                         href="/admin/dashboard"
-                        class="rounded-xl px-3 py-2 text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 dark:text-slate-400 dark:hover:bg-emerald-950/30 dark:hover:text-emerald-400"
+                        class="rounded-xl px-3 py-2 text-slate-600 hover:bg-brand-50 hover:text-brand-700 dark:text-slate-400 dark:hover:bg-brand-950/30 dark:hover:text-brand-400"
                         >Dashboard</Link
                     >
                     <Link
                         href="/admin/members"
-                        class="rounded-xl px-3 py-2 text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 dark:text-slate-400 dark:hover:bg-emerald-950/30 dark:hover:text-emerald-400"
+                        class="rounded-xl px-3 py-2 text-slate-600 hover:bg-brand-50 hover:text-brand-700 dark:text-slate-400 dark:hover:bg-brand-950/30 dark:hover:text-brand-400"
                         >Members</Link
                     >
                     <Link
                         href="/admin/payments"
-                        class="rounded-xl px-3 py-2 text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 dark:text-slate-400 dark:hover:bg-emerald-950/30 dark:hover:text-emerald-400"
+                        class="rounded-xl px-3 py-2 text-slate-600 hover:bg-brand-50 hover:text-brand-700 dark:text-slate-400 dark:hover:bg-brand-950/30 dark:hover:text-brand-400"
                         >Payments</Link
                     >
                     <Link
                         href="/admin/events"
-                        class="rounded-xl px-3 py-2 text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 dark:text-slate-400 dark:hover:bg-emerald-950/30 dark:hover:text-emerald-400"
+                        class="rounded-xl px-3 py-2 text-slate-600 hover:bg-brand-50 hover:text-brand-700 dark:text-slate-400 dark:hover:bg-brand-950/30 dark:hover:text-brand-400"
                         >Events</Link
                     >
                     <Link
                         href="/admin/contact-messages"
-                        class="rounded-xl px-3 py-2 text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 dark:text-slate-400 dark:hover:bg-emerald-950/30 dark:hover:text-emerald-400"
+                        class="rounded-xl px-3 py-2 text-slate-600 hover:bg-brand-50 hover:text-brand-700 dark:text-slate-400 dark:hover:bg-brand-950/30 dark:hover:text-brand-400"
                         >Contact Messages</Link
                     >
                     <Link

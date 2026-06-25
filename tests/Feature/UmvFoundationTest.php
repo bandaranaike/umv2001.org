@@ -24,6 +24,8 @@ test('umv tables and user fields exist', function () {
         ->and(Schema::hasTable('events'))->toBeTrue()
         ->and(Schema::hasTable('event_photos'))->toBeTrue()
         ->and(Schema::hasTable('contact_messages'))->toBeTrue();
+
+    expect(file_exists(public_path('images/umv2001-logo.png')))->toBeTrue();
 });
 
 test('admin middleware blocks members', function () {

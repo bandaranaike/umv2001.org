@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Form, Head, Link } from '@inertiajs/vue3';
+import { formatDate } from '@/lib/utils';
 
 defineProps<{
     member: {
@@ -32,38 +33,45 @@ defineProps<{
 <template>
     <Head :title="member.name" />
     <div class="space-y-8">
-        <div class="flex flex-wrap items-center justify-between gap-4">
-            <div>
-                <h1
-                    class="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50"
-                >
-                    {{ member.name }}
-                </h1>
-                <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                    {{ member.email }} ·
-                    {{ member.membership_number || 'No membership number' }}
-                </p>
-            </div>
-            <div class="flex gap-3">
-                <Link
-                    :href="`/admin/members/${member.id}/edit`"
-                    class="rounded-xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
-                    >Edit</Link
-                >
-                <Form
-                    :action="`/admin/members/${member.id}/reset-password`"
-                    method="post"
-                >
-                    <button
-                        class="rounded-xl bg-amber-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-amber-700 dark:bg-amber-700 dark:hover:bg-amber-800"
+        <div
+            class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm ring-1 ring-slate-200/60 dark:ring-slate-800/80 dark:border-slate-800 dark:bg-slate-900"
+        >
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <div>
+                    <p class="text-sm font-medium text-brand-700 dark:text-brand-400">
+                        Admin Area
+                    </p>
+                    <h1
+                        class="mt-2 text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50"
                     >
-                        Reset Password
-                    </button>
-                </Form>
+                        {{ member.name }}
+                    </h1>
+                    <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                        {{ member.email }} ·
+                        {{ member.membership_number || 'No membership number' }}
+                    </p>
+                </div>
+                <div class="flex gap-3">
+                    <Link
+                        :href="`/admin/members/${member.id}/edit`"
+                        class="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+                        >Edit</Link
+                    >
+                    <Form
+                        :action="`/admin/members/${member.id}/reset-password`"
+                        method="post"
+                    >
+                        <button
+                            class="rounded-lg bg-amber-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-amber-700 dark:bg-amber-700 dark:hover:bg-amber-800"
+                        >
+                            Reset Password
+                        </button>
+                    </Form>
+                </div>
             </div>
         </div>
         <section
-            class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+            class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm ring-1 ring-slate-200/60 dark:ring-slate-800/80 dark:border-slate-800 dark:bg-slate-900"
         >
             <h2 class="text-lg font-semibold text-slate-900 dark:text-slate-50">
                 Private family details
@@ -72,7 +80,7 @@ defineProps<{
                 <div
                     v-for="familyMember in member.family_members"
                     :key="familyMember.id"
-                    class="rounded-xl border border-slate-200 bg-slate-50/50 p-4 dark:border-slate-800 dark:bg-slate-950/20"
+                    class="rounded-lg border border-slate-200 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-950/20"
                 >
                     <p class="font-medium text-slate-900 dark:text-slate-100">
                         {{ familyMember.name }}
@@ -85,7 +93,7 @@ defineProps<{
             </div>
         </section>
         <section
-            class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+            class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm ring-1 ring-slate-200/60 dark:ring-slate-800/80 dark:border-slate-800 dark:bg-slate-900"
         >
             <h2 class="text-lg font-semibold text-slate-900 dark:text-slate-50">
                 Payment history
@@ -94,10 +102,10 @@ defineProps<{
                 <div
                     v-for="payment in member.payments"
                     :key="payment.id"
-                    class="rounded-xl border border-slate-200 bg-slate-50/50 p-4 text-sm text-slate-700 dark:border-slate-800 dark:bg-slate-950/20 dark:text-slate-300"
+                    class="rounded-lg border border-slate-200 bg-slate-50/70 p-4 text-sm text-slate-700 dark:border-slate-800 dark:bg-slate-950/20 dark:text-slate-300"
                 >
                     {{ payment.month }}/{{ payment.year }} ·
-                    {{ payment.amount }} · {{ payment.paid_at }} ·
+                    {{ payment.amount }} · {{ formatDate(payment.paid_at) }} ·
                     {{ payment.payment_method }}
                 </div>
             </div>

@@ -14,10 +14,10 @@ defineProps<Props>();
 <template>
     <div data-test="team-invitation-alert">
         <Alert
-            class="border-blue-200 bg-blue-50 text-blue-900 dark:border-blue-900/50 dark:bg-blue-950/50 dark:text-blue-100 [&>svg]:text-blue-600 dark:[&>svg]:text-blue-400"
+            class="border-brand-200 bg-brand-50 text-brand-900 dark:border-brand-900/50 dark:bg-brand-950/50 dark:text-brand-100 [&>svg]:text-brand-600 dark:[&>svg]:text-brand-400"
         >
             <Info class="size-4" />
-            <AlertDescription class="text-blue-900 dark:text-blue-100">
+            <AlertDescription class="text-brand-900 dark:text-brand-100">
                 {{ action }} to join the "{{ invitation.teamName }}" team.
             </AlertDescription>
         </Alert>

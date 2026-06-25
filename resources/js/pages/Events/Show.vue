@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
+import { formatDate } from '@/lib/utils';
 
 const props = defineProps<{
     event: {
@@ -19,7 +20,7 @@ const props = defineProps<{
     <Head :title="props.event.title" />
     <section class="bg-white dark:bg-slate-950 py-16 sm:py-20 transition-colors duration-300">
         <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-            <p class="text-sm font-medium text-emerald-700 dark:text-emerald-400">{{ event.start_date }} · {{ event.location }}</p>
+            <p class="text-sm font-medium text-brand-700 dark:text-brand-400">{{ formatDate(event.start_date) }} · {{ event.location }}</p>
             <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50 md:text-4xl">{{ event.title }}</h1>
             <p class="mt-6 whitespace-pre-line text-base leading-7 text-slate-600 dark:text-slate-400">{{ event.description }}</p>
 

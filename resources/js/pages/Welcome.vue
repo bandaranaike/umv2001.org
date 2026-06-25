@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
+import { formatDate } from '@/lib/utils';
 
 defineProps<{
     latestEvents: Array<{
@@ -21,7 +22,7 @@ defineProps<{
         >
             <div>
                 <p
-                    class="inline-flex rounded-full bg-emerald-50 dark:bg-emerald-950/30 px-3 py-1 text-sm font-medium text-emerald-700 dark:text-emerald-400"
+                    class="inline-flex rounded-full bg-brand-50 dark:bg-brand-950/30 px-3 py-1 text-sm font-medium text-brand-700 dark:text-brand-400"
                 >
                     UMV 2001 O/L Alumni Association
                 </p>
@@ -38,7 +39,7 @@ defineProps<{
                 <div class="mt-8 flex flex-wrap gap-3">
                     <Link
                         href="/events"
-                        class="rounded-full bg-emerald-700 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-emerald-800"
+                        class="rounded-full bg-brand-700 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-brand-800"
                     >
                         View Events
                     </Link>
@@ -53,7 +54,7 @@ defineProps<{
             <div
                 class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm"
             >
-                <p class="text-sm font-medium text-emerald-700 dark:text-emerald-400">
+                <p class="text-sm font-medium text-brand-700 dark:text-brand-400">
                     Community focus
                 </p>
                 <h2
@@ -122,7 +123,7 @@ defineProps<{
                 </div>
                 <Link
                     href="/events"
-                    class="text-sm font-semibold text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300"
+                    class="text-sm font-semibold text-brand-700 dark:text-brand-400 hover:text-brand-800 dark:hover:text-brand-300"
                     >View all</Link
                 >
             </div>
@@ -136,7 +137,7 @@ defineProps<{
                     class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm"
                 >
                     <p class="text-sm text-slate-500 dark:text-slate-400">
-                        {{ event.start_date }} · {{ event.location }}
+                        {{ formatDate(event.start_date) }} · {{ event.location }}
                     </p>
                     <h3 class="mt-3 text-lg font-semibold text-slate-900 dark:text-slate-50">
                         {{ event.title }}
@@ -146,7 +147,7 @@ defineProps<{
                     </p>
                     <Link
                         :href="`/events/${event.slug}`"
-                        class="mt-4 inline-flex text-sm font-semibold text-emerald-700 dark:text-emerald-400"
+                        class="mt-4 inline-flex text-sm font-semibold text-brand-700 dark:text-brand-400"
                         >View details</Link
                     >
                 </article>

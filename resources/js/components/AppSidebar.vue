@@ -134,7 +134,7 @@ const footerNavItems: NavItem[] = [
 
 <template>
     <Sidebar collapsible="icon" variant="inset">
-        <SidebarHeader>
+        <SidebarHeader class="px-2 pt-2">
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
@@ -151,7 +151,7 @@ const footerNavItems: NavItem[] = [
             </SidebarMenu>
         </SidebarHeader>
 
-        <SidebarContent>
+        <SidebarContent class="gap-1">
             <NavMain
                 v-if="user?.role === 'member' || user?.role === 'admin'"
                 :items="memberNavItems"
@@ -165,7 +165,7 @@ const footerNavItems: NavItem[] = [
             <NavMain :items="settingsNavItems" label="Settings" />
         </SidebarContent>
 
-        <SidebarFooter>
+        <SidebarFooter class="gap-2">
             <NavFooter :items="footerNavItems" />
             <NavUser />
         </SidebarFooter>
