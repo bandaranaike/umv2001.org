@@ -72,6 +72,7 @@ jobs:
       DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
       DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
       DEPLOY_PORT: ${{ secrets.DEPLOY_PORT || '22' }}
+      DEPLOY_SSH_PASSPHRASE: ${{ secrets.DEPLOY_SSH_PASSPHRASE }}
       RELEASE_SHA: ${{ github.sha }}
 
     steps:
@@ -92,8 +93,13 @@ jobs:
           # Accept either a raw multiline private key or a secret stored with literal \n escapes.
           printf '%b' "${{ secrets.DEPLOY_SSH_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          if ! ssh-keygen -y -f ~/.ssh/id_rsa > /dev/null 2>&1; then
-            echo "::error::DEPLOY_SSH_KEY is not a valid unencrypted OpenSSH private key."
+          if [ -n "${DEPLOY_SSH_PASSPHRASE}" ]; then
+            if ! ssh-keygen -y -P "${DEPLOY_SSH_PASSPHRASE}" -f ~/.ssh/id_rsa > /dev/null 2>&1; then
+              echo "::error::DEPLOY_SSH_KEY could not be unlocked with DEPLOY_SSH_PASSPHRASE."
+              exit 1
+            fi
+          elif ! ssh-keygen -y -f ~/.ssh/id_rsa > /dev/null 2>&1; then
+            echo "::error::DEPLOY_SSH_KEY is not a valid unencrypted OpenSSH private key. If the key is encrypted, add DEPLOY_SSH_PASSPHRASE."
             exit 1
           fi
 
