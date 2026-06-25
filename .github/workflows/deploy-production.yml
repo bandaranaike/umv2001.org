@@ -121,6 +121,17 @@ jobs:
           ln -sfn "${SHARED_DIR}/bootstrap/cache" "${RELEASE_DIR}/bootstrap/cache"
 
           cd "${RELEASE_DIR}"
+
+          mkdir -p "${SHARED_DIR}/storage/logs"
+          mkdir -p "${SHARED_DIR}/storage/framework/cache/data"
+          mkdir -p "${SHARED_DIR}/storage/framework/sessions"
+          mkdir -p "${SHARED_DIR}/storage/framework/views"
+          mkdir -p "${SHARED_DIR}/bootstrap/cache"
+
+          touch "${SHARED_DIR}/storage/logs/laravel.log"
+
+          chmod -R ug+rwX "${SHARED_DIR}/storage" "${SHARED_DIR}/bootstrap/cache"
+
           php artisan migrate --force
           php artisan config:cache
 
